@@ -1,9 +1,7 @@
-from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
-from starlette import status
-from dependencies import get_db
-from models.user import User
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+#Keep Main clean
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -13,13 +11,3 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-#Debug Example
-@app.get("/users")
-def get_users(db: Session = Depends(get_db)):
-    print("received request")
-    try:
-        users = db.query(User).all()
-        return users
-    except Exception as e:
-        print("Error fetching users:", e)
-        raise HTTPException(status_code=500, detail=str(e))
