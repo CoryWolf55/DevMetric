@@ -1,4 +1,4 @@
-# GitFlow
+# DevMetric
 
 ## GitHub AI Checker is an AI-powered tool that benchmarks your GitHub activity against peers and provides insights on your coding progress, languages, and skill growth over time.
 
