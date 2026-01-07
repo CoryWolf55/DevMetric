@@ -19,7 +19,7 @@ function SignUpPage() {
       const res = await axios.post(
         "http://localhost:8000/signup",
         { username, age, password },
-        { withCredentials: true } // needed if you use cookies
+        { withCredentials: true } 
       );
       setSuccess("Signup successful!");
     } catch (err) {
