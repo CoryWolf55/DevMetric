@@ -196,6 +196,23 @@ def dashboard_data(request: Request, userId: str = Cookie(None)):
     return {"userId": userId}
 
 
+"""Get Username using UserID for checking if already logged in"""
+@router.get("/user/username")
+@limiter.limit("5/min")
+def get_username(request: Request, db: Session = Depends(get_db), userId: str = Cookie(None)):
+    if not userId:
+        raise HTTPException(status_code=401, detail="Not logged in")
+
+    # fetch user
+    user = db.query(User).filter(User.id == userId).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return {
+        "username": user.username
+    }
+
+
 
 
 """Project FLow, Github redirect, grab token. Then create or login to local account. Local account will ask questions such as 
