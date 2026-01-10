@@ -111,7 +111,7 @@ load_dotenv(dotenv_path="envfolder/env_file.env")
 GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID")
 GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
 GITHUB_CALLBACK_URL = "http://localhost:8000/auth/github/callback"  # adjust for production
-frontend_url = "http://localhost:5173"
+frontend_url = "http://localhost:5173/signup"
 @router.get("/auth/github/login")
 def github_login():
     github_auth_url = (

@@ -1,7 +1,20 @@
 import "../styles/mainview.css"
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { useNavigate } from "react-router-dom";
+
 function MainView(){
 
+const navigate = useNavigate();
+
+    const toLogin = (e) => {
+    e.preventDefault();
+    navigate("/login");
+  };
+
+  const toLearnMore = (e) => {
+    e.preventDefault();
+    navigate("/learnmore");
+  }
 
     return(
         <div className="hero">
@@ -15,8 +28,12 @@ function MainView(){
     </p>
 
     <div className="hero-actions">
-      <button className="hero-button-primary">Get Started Free</button>
-      <button className="hero-button-secondary">Learn More</button>
+      <form onSubmit={toLogin}>
+        <button type="submit" className="hero-button-primary">Get Started Free</button>
+       </form>
+       <form onSubmit={toLearnMore}>
+        <button type="submit" className="hero-button-secondary">Learn More</button>
+       </form>
     </div>
 
     <div className="hero-features">

@@ -1,6 +1,18 @@
-/* =========================
-   DevMetric Navbar
-   ========================= */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes navbarEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .navbar {
   display: flex;
@@ -10,22 +22,24 @@
   padding: 0 2rem;
   background-color: #0f172a;
   border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+
+  animation: navbarEnter 0.6s ease-out 0.15s both;
+  will-change: transform, opacity;
 }
 
-/* LEFT — Logo */
 .navbar-left .logo {
   font-size: 1.35rem;
   font-weight: 700;
   color: #e5e7eb;
   letter-spacing: -0.5px;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .navbar-left .logo:hover {
   color: #22d3ee;
+  transform: translateY(-1px);
 }
 
-/* CENTER — Links */
 .navbar-center {
   flex: 1;
   display: flex;
@@ -51,7 +65,6 @@
   color: #e5e7eb;
 }
 
-/* Animated underline */
 .nav-links a::after {
   content: "";
   position: absolute;
@@ -67,7 +80,6 @@
   width: 100%;
 }
 
-/* RIGHT — CTA */
 .navbar-right {
   display: flex;
   align-items: center;
@@ -83,9 +95,7 @@
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.25s ease;
+  transition: transform 0.15s ease, box-shadow 0.25s ease;
 }
 
 .button:hover {

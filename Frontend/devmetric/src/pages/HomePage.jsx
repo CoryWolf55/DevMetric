@@ -6,7 +6,7 @@ import "../styles/index.css"
 function HomePage(){
     return(
         <div>
-            <NavBar/>
+            <NavBar isMainPage = {true}/>
             <MainView/>
             <Cards/>
         </div>

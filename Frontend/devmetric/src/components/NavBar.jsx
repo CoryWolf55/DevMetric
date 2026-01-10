@@ -1,13 +1,8 @@
 import "../styles/navbar.css";
-import { useNavigate } from "react-router-dom";
+import NavRightSide from "./NavRightSide";
 
-function NavBar() {
-
-
-    const toLogin = (e) => {
-    e.preventDefault();
-    navigate("/loginpage");
-  };
+function NavBar(props) {
+  
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -19,26 +14,26 @@ function NavBar() {
       <div className="navbar-center">
         <ul className="nav-links">
           <li>
-            <a href="/products">Null</a>
+            <a href="/leaderboard">Leaderboard</a>
           </li>
           <li>
-            <a href="/about">Null</a>
+            <a href="/metrics">Metrics</a>
           </li>
           <li>
-            <a href="/contact">Null</a>
+            <a href="/faq">FAQ</a>
           </li>
         </ul>
       </div>
-
       <div className="navbar-right">
-        <form onSubmit={toLogin}>
-          <div className="button-container">
-            <button type="submit" className="button">Get Started Free</button>
-          </div>
-        </form>
+        <NavRightSide isMainPage = {props.isMainPage}/>
       </div>
     </nav>
   );
+}
+
+
+NavBar.defaultProps = {
+  isMainPage: false
 }
 
 export default NavBar;
