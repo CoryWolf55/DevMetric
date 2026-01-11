@@ -1,10 +1,12 @@
 import "../styles/logincard.css";
 import { API_URL_BASE } from "../config";
+import {useEffect } from "react";
 
 function LoginCard() {
   const handleGithubLogin = () => {
     window.location.href = `${API_URL_BASE}/auth/github/login`;
   };
+
 
   return (
     <div className="login-page-wrapper">
@@ -24,9 +26,12 @@ function LoginCard() {
 
         <p className="login-alt">
           Already have an account?{" "}
-          <a href="/signup" className="login-link">
-            Log in here
-          </a>
+          <a
+          href="/signup"
+          className="login-link"
+          >
+          Log in here
+            </a>
         </p>
 
         <p className="login-footnote">

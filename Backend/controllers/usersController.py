@@ -112,11 +112,11 @@ def create_user(user_dto: UserCreateDTO,request: Request, db: Session = Depends(
 @limiter.limit("10/minute; 100/hour")
 def register_user(request: Request, user_dto: UserRegisterDTO, db: Session = Depends(get_db)):
     #Check if user exists, if so update their info if changed, then log in
-    print("received request")
+    print("Received user DTO:", user_dto)
     try:
         existing_user = (
             db.query(User)
-            .filter(User.username == user_dto.username)
+            .filter(User.username.lower() == user_dto.username.lower())
             .first()
         )
         # Check if there is a user that matches
@@ -144,7 +144,6 @@ def register_user(request: Request, user_dto: UserRegisterDTO, db: Session = Dep
             user.age = int(user_dto.age)
 
         post_commit(user, db)
-
         return UserRegisterResponseDTO.model_validate(user)
 
     except HTTPException:
@@ -172,6 +171,7 @@ def get_username(request: Request, db: Session = Depends(get_db), userId: str = 
         user = db.query(User).filter(User.id == int(userId)).first()
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
+
 
         return {"username": user.username}
 

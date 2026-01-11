@@ -8,6 +8,7 @@ import NavBar from "../components/NavBar";
 function SignUpPage() {
   const [githubUsername, setGithubUsername] = useState(""); // replace later with GitHub username
   const [canEdit, setCanEdit] = useState(false);
+
   const navigate = useNavigate();
 
   //Check cookie for github auth
@@ -20,10 +21,10 @@ function SignUpPage() {
       if (userID) {
         localStorage.setItem("userID", userID);
         console.log("Got userID from cookie:", userID);
+        setCanEdit(userID);
       } else {
         console.log("No userID found in response");
       }
-      setCanEdit(userID);
     } catch (err) {
       console.log("Grab Error cookie:", err);
     }
@@ -32,30 +33,52 @@ function SignUpPage() {
 
 
    const getUsername = async () => {
-    try{
-
-      const response = await axios.get(`${API_URL_BASE}/user/username`, {
-    withCredentials: true
+  try {
+    const response = await axios.get(`${API_URL_BASE}/user/username`, {
+      withCredentials: true,
     });
-      console.log(response);
 
-      const username = response.data?.username;
-      if(username){setGithubUsername(username);}
-    }
-    catch{
-      console.log("Error with finding username");
-    }
-  };
+    console.log(response);
 
-  checkCookie();
-  getUsername();
+    const username = response.data?.username;
+
+    if (!username) return;
+
+    setGithubUsername(username);
+    localStorage.setItem("username", username);
+    setCanEdit(username);
+
+  } catch (err) {
+    console.log("Error getting or setting username", err);
+  }
+};
+
+  if(!localStorage.getItem("userID"))
+  {
+    checkCookie();
+  }
+  if(!localStorage.getItem("username"))
+  {
+     getUsername();
+  }
+  else {
+    const username = localStorage.getItem("username");
+    setCanEdit(false);
+    setGithubUsername(username);
+    console.log(username);
+  }
+  
 }, []);
 
   const handleSignup = async (data) => {
     try {
       // Send to backend
-      data.username = githubUsername;
-      const res = await axios.post(`${API_URL_BASE}/user/register`, data);
+      const payload = {
+      ...data,
+      username: githubUsername,
+      age: data.age ? Number(data.age) : null
+    };
+      const res = await axios.post(`${API_URL_BASE}/user/register`, payload);
       console.log("Signup success:", res.data);
       responseData = res.data;
       if(responseData){

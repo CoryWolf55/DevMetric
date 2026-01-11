@@ -6,6 +6,7 @@ function SignInCard({ githubUsername, onSubmit , setGithubUsername, canEdit}) {
   const [password, setPassword] = useState("");
   const [titleText, setTitleText] = useState("");
   const [buttonText, setButtonText] = useState("");
+  const [displayAge, setDisplayAge] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,14 +14,22 @@ function SignInCard({ githubUsername, onSubmit , setGithubUsername, canEdit}) {
   };
 
   useEffect(() => {
-    if (canEdit) {
-      setTitleText("Log in");
-      setButtonText("Complete Login");
-    } else {
-      setTitleText("Complete Your Signup"); 
-      setButtonText("Complete Signup");
+    setTitleText("Log in");
+    setButtonText("Complete Login");
+
+    //Check age
+
+    const age = localStorage.getItem("age");
+
+    if(age)
+    {
+      setAge(age);
+      displayAge(age);
     }
-  }, [canEdit]); 
+    else{
+      setDisplayAge("Enter your age");
+    }
+}, []);
 
   return (
     <div className="signin-page-wrapper">
@@ -37,7 +46,7 @@ function SignInCard({ githubUsername, onSubmit , setGithubUsername, canEdit}) {
             value={githubUsername || ""} 
             onChange={(e) => setGithubUsername(e.target.value)}
             disabled={
-            canEdit
+            !canEdit
             } 
             placeholder="Enter your GitHub Username"
             />
@@ -51,7 +60,7 @@ function SignInCard({ githubUsername, onSubmit , setGithubUsername, canEdit}) {
               onChange={(e) => setAge(e.target.value)}
               required={canEdit}
               disabled={!canEdit}
-              placeholder="Enter your age"
+              placeholder={displayAge}
             />
           </div>
 

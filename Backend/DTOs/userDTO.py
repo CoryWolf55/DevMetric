@@ -38,7 +38,7 @@ class UserLoginResponseDTO(BaseModel):
 class UserRegisterDTO(BaseModel):
     username: str
     password: str
-    age: int | None = None
+    age: Optional[int]
 
     class Config:
         from_attributes = True
@@ -46,7 +46,7 @@ class UserRegisterDTO(BaseModel):
 class UserRegisterResponseDTO(BaseModel):
     github_id: int
     username: str
-    age: int
+    age: Optional[int]
 
     class Config:
         from_attributes = True
